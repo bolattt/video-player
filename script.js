@@ -32,22 +32,18 @@ video.addEventListener("ended", showPlayIcon);
 // End of  Play & Pause ----------------------------------- //
 
 // Progress Bar ---------------------------------- //
-// Update progress bar as video plays
-function changeIntoMinutes(seconds) {
-  const minutes = (seconds / 60).toFixed(0);
-  let sec = seconds.toString().split(".")[0];
-  if (Number(sec) < 10) {
-    sec = `0${sec}`;
-  }
+// Calculate display time format
+function displayTime(time) {
+  const minutes = Math.floor(time / 60);
+  let sec = Math.floor(time % 60);
+  sec < 10 ? (sec = `0${sec}`) : sec;
   return `${minutes}:${sec}`;
 }
-
+// Update progress bar as video plays
 function updateProgress() {
   progressBar.style.width = `${(video.currentTime / video.duration) * 100}%`;
-  //   const minutes = (video.duration / 60).toFixed(0);
-  //   const sec = (video.duration % 60).toFixed(2).toString().split(".")[1];
-  duration.textContent = changeIntoMinutes(video.duration);
-  currentTime.textContent = changeIntoMinutes(video.currentTime);
+  duration.textContent = displayTime(video.duration);
+  currentTime.textContent = displayTime(video.currentTime);
 }
 
 // Volume Controls --------------------------- //
