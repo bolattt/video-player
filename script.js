@@ -108,12 +108,48 @@ function toggleMute() {
 // Change Playback Speed -------------------- //
 
 function changeSpeed() {
-  console.log("video playback rate", video.playbackRate);
-  console.log("selected value", speed.value);
   video.playbackRate = speed.value;
 }
 
 // Fullscreen ------------------------------- //
+function openFullscreen(elem) {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) {
+    /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    /* IE11 */
+    elem.msRequestFullscreen();
+  }
+  video.classList.add("video-fullscreen");
+}
+
+/* Close fullscreen */
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) {
+    /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) {
+    /* IE11 */
+    document.msExitFullscreen();
+  }
+  video.classList.remove("video-fullscreen");
+}
+
+let fullScreen = false;
+
+function toggleFullscreen() {
+  if (!fullScreen) {
+    openFullscreen(player);
+  } else {
+    closeFullscreen();
+  }
+  fullScreen = !fullScreen;
+  console.log("toggled");
+}
 
 // Event Listeners
 playBtn.addEventListener("click", togglePlay);
@@ -124,3 +160,4 @@ progressRange.addEventListener("click", setProgress);
 volumeRange.addEventListener("click", changeVolume);
 volumeIcon.addEventListener("click", toggleMute);
 speed.addEventListener("change", changeSpeed);
+fullscreenBtn.addEventListener("click", toggleFullscreen);
